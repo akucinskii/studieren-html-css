@@ -176,6 +176,7 @@
       <h2>Teledysk</h2>
       <div class="video">
         <iframe
+          id="video1"
           width="600"
           height="800"
           src="https://www.youtube.com/embed/xVdn9GhwJgk"
@@ -341,6 +342,11 @@
             clearInterval(interval);
             container.style.animation = "spin 1s linear infinite";
             lololo();
+            document.getElementById("video1").src += "?autoplay=1";
+            container.style.pointerEvents = "none";
+            window.onbeforeunload = function () {
+              return "You won! Don't leave now!";
+            };
           }
         }, 50);
 
@@ -380,8 +386,6 @@
       }, 1000);
 
       const container = document.querySelector(".container");
-
-      // make it rotate
     });
   </script>
 </html>
