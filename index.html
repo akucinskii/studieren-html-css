@@ -23,6 +23,11 @@
         height: auto;
         border-radius: 5px;
       }
+      .image--container {
+        display: absolute;
+        justify-content: center;
+        animation: left-right 5s linear infinite;
+      }
       .video {
         width: 100%;
         animation: spin 5s linear infinite;
@@ -31,6 +36,17 @@
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
+      }
+      @keyframes left-right {
+        0% {
+          transform: translateX(-100px);
+        }
+        50% {
+          transform: translateX(100px);
+        }
+        100% {
+          transform: translateX(-100px);
+        }
       }
       @-moz-keyframes spin {
         from {
@@ -76,6 +92,13 @@
   </head>
   <body>
     <div class="container">
+      <div class="image--container">
+        <h2>Zdjecie</h2>
+        <img
+          src="https://i.ytimg.com/vi/xVdn9GhwJgk/hqdefault.jpg"
+          alt="Popek - Bollywódzka produkcja pakistanskie disco"
+        />
+      </div>
       <h2>Teledysk</h2>
       <div class="video">
         <iframe
