@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.content {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+hr {
+  border: 1px dotted #70808f;
+}
+.question {
+  font-weight: bold;
+  color: #70808f;
+}
+
+h1 {
+  color: #70808f;
+}
+
+.content {
+  border-left: 1px solid #000;
+  padding: 1rem;
+}
