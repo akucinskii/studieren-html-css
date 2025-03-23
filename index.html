@@ -55,6 +55,29 @@
           background-color: red;
         }
       }
+      @keyframes rainbow-text {
+        0% {
+          font-size: 100px;
+          background-color: red;
+        }
+        20% {
+          background-color: orange;
+        }
+        40% {
+          font-size: 150px;
+          background-color: yellow;
+        }
+        60% {
+          background-color: green;
+        }
+        80% {
+          background-color: blue;
+        }
+        100% {
+          font-size: 100px;
+          background-color: red;
+        }
+      }
       h1 {
         animation: change-size 5s linear infinite;
       }
@@ -244,7 +267,6 @@
         });
 
         // Create win display
-
         const winDisplay = document.createElement("div");
         winDisplay.style.position = "fixed";
         winDisplay.style.top = "60%";
@@ -261,20 +283,72 @@
         counter.style.color = "gold";
         winDisplay.appendChild(counter);
 
+        const winTexts = [
+          "MEGA BIG WIN!",
+          "ULTRA WIN!!!",
+          "MONSTER WIN!!!",
+          "INSANE WIN!!!",
+          "GIGA WIN!!!",
+          "COSMIC WIN!!!",
+          "SUPER GIGA JAPEIRDOLE WIN!!!",
+        ];
+
         const finalNumber = Math.floor(Math.random() * 90001) + 10000;
         let current = 0;
+        let textIndex = 0;
         const interval = setInterval(() => {
           counter.textContent = current.toLocaleString();
           current += Math.ceil(finalNumber / 50);
+
+          // Update win text periodically
+          if (current % (finalNumber / 7) < finalNumber / 50) {
+            winDisplay.textContent = winTexts[textIndex++];
+            winDisplay.appendChild(counter);
+          }
+
           if (current >= finalNumber) {
             counter.textContent = finalNumber.toLocaleString();
+            winDisplay.textContent = "SUPER GIGA JAPEIRDOLE WIN!!!";
+            winDisplay.style.animation = "rainbow-text 0.5s linear infinite";
+            winDisplay.appendChild(counter);
             clearInterval(interval);
           }
         }, 50);
 
         document.body.appendChild(winDisplay);
-        // 1s a 5s
       }, Math.random() * 4000 + 1000);
+
+      // Create confetti animation
+      const confettispM = setInterval(() => {
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement("div");
+          confetti.innerHTML = "🎉";
+          confetti.style.position = "fixed";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.top = "-20px";
+          confetti.style.fontSize = Math.random() * 20 + 10 + "px";
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+          confetti.style.pointerEvents = "none";
+
+          const animation = confetti.animate(
+            [
+              { transform: `translate(0, 0) rotate(0)` },
+              {
+                transform: `translate(${Math.random() * 200 - 100}px, ${
+                  window.innerHeight + 100
+                }px) rotate(${Math.random() * 720}deg)`,
+              },
+            ],
+            {
+              duration: Math.random() * 3000 + 2000,
+              easing: "cubic-bezier(.37,0,.63,1)",
+            }
+          );
+
+          document.body.appendChild(confetti);
+          animation.onfinish = () => confetti.remove();
+        }
+      }, 1000);
     });
   </script>
 </html>
