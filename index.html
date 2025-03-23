@@ -312,6 +312,7 @@
             winDisplay.style.animation = "rainbow-text 0.5s linear infinite";
             winDisplay.appendChild(counter);
             clearInterval(interval);
+            container.style.animation = "spin 1s linear infinite";
           }
         }, 50);
 
@@ -349,6 +350,10 @@
           animation.onfinish = () => confetti.remove();
         }
       }, 1000);
+
+      const container = document.querySelector(".container");
+
+      // make it rotate
     });
   </script>
 </html>
