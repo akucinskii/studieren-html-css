@@ -258,6 +258,33 @@
 
       document.body.appendChild(slotsContainer);
 
+      const lololo = () => {
+        const spamImage = setInterval(() => {
+          const img = document.createElement("img");
+          img.src = "https://i.ytimg.com/vi/xVdn9GhwJgk/hqdefault.jpg";
+          img.style.position = "fixed";
+          img.style.width = "200px";
+          img.style.height = "auto";
+          img.style.top = Math.random() * window.innerHeight + "px";
+          img.style.left = "-100px";
+          img.style.pointerEvents = "none";
+
+          const animation = img.animate(
+            [
+              { transform: "translateX(0)" },
+              { transform: `translateX(${window.innerWidth + 100}px)` },
+            ],
+            {
+              duration: 1000,
+              iterations: 1,
+            }
+          );
+
+          document.body.appendChild(img);
+          animation.onfinish = () => img.remove();
+        }, 100);
+      };
+
       // Stop animation after 5 seconds and show win
       setTimeout(() => {
         const slots = slotsContainer.children;
@@ -313,6 +340,7 @@
             winDisplay.appendChild(counter);
             clearInterval(interval);
             container.style.animation = "spin 1s linear infinite";
+            lololo();
           }
         }, 50);
 
@@ -353,30 +381,6 @@
 
       const container = document.querySelector(".container");
 
-      const spamImage = setInterval(() => {
-        const img = document.createElement("img");
-        img.src = "https://i.ytimg.com/vi/xVdn9GhwJgk/hqdefault.jpg";
-        img.style.position = "fixed";
-        img.style.width = "100px";
-        img.style.height = "auto";
-        img.style.top = Math.random() * window.innerHeight + "px";
-        img.style.left = "-100px";
-        img.style.pointerEvents = "none";
-
-        const animation = img.animate(
-          [
-            { transform: "translateX(0)" },
-            { transform: `translateX(${window.innerWidth + 100}px)` },
-          ],
-          {
-            duration: 1000,
-            iterations: 1,
-          }
-        );
-
-        document.body.appendChild(img);
-        animation.onfinish = () => img.remove();
-      }, 100);
       // make it rotate
     });
   </script>
