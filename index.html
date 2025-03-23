@@ -32,6 +32,43 @@
         width: 100%;
         animation: spin 5s linear infinite;
       }
+      body {
+        animation: rainbow 5s linear infinite;
+      }
+      @keyframes rainbow {
+        0% {
+          background-color: red;
+        }
+        20% {
+          background-color: orange;
+        }
+        40% {
+          background-color: yellow;
+        }
+        60% {
+          background-color: green;
+        }
+        80% {
+          background-color: blue;
+        }
+        100% {
+          background-color: red;
+        }
+      }
+      h1 {
+        animation: change-size 5s linear infinite;
+      }
+      @keyframes change-size {
+        0% {
+          font-size: 20px;
+        }
+        50% {
+          font-size: 30px;
+        }
+        100% {
+          font-size: 20px;
+        }
+      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -92,6 +129,7 @@
   </head>
   <body>
     <div class="container">
+      <h1>Pakistanskie disco - moja ulubiona piosenka</h1>
       <div class="image--container">
         <h2>Zdjecie</h2>
         <img
