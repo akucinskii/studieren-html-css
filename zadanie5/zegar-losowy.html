@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abstract Clock</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+
+      .clock {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 5px solid black;
+        position: relative;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .clock .number {
+        --rotation: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transform: rotate(var(--rotation));
+        font-size: 0.8rem; /* Smaller font for 60 numbers */
+        transition: transform 1s ease-in-out; /* Add transition for smooth movement */
+      }
+
+      .clock .number span {
+        display: inline-block;
+        transform: rotate(
+          calc(-1 * var(--rotation))
+        ); /* Keep numbers upright */
+        padding-top: 5px; /* Adjust position from edge */
+      }
+
+      /* Position numbers 1-60 */
+      /* This uses a loop in JS to generate, but we can hardcode a few for demo */
+      /* A full implementation would ideally use JS to generate these */
+
+      .hand {
+        --rotation: 0;
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        background-color: black;
+        transform-origin: bottom;
+        transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 10;
+        transition: transform 1s ease-in-out; /* Add transition for smooth hand movement */
+      }
+
+      .hand.hour {
+        width: 6px;
+        height: 80px;
+        background-color: black;
+        z-index: 8;
+      }
+
+      .hand.minute {
+        width: 4px;
+        height: 110px;
+        background-color: #555;
+        z-index: 9;
+      }
+
+      .hand.second {
+        width: 2px;
+        height: 120px;
+        background-color: red;
+        z-index: 10;
+      }
+
+      .center-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+        z-index: 11;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="hand hour" data-hour-hand></div>
+      <div class="hand minute" data-minute-hand></div>
+      <div class="hand second" data-second-hand></div>
+      <div class="center-dot"></div>
+      <!-- Numbers will be added dynamically with JavaScript -->
+    </div>
+
+    <script>
+      const clock = document.querySelector(".clock");
+      const hourHand = document.querySelector("[data-hour-hand]");
+      const minuteHand = document.querySelector("[data-minute-hand]");
+      const secondHand = document.querySelector("[data-second-hand]");
+
+      const numberElements = []; // Store number elements
+      const numberPositions = {}; // Map: number value -> rotation angle (degrees)
+
+      // Fisher-Yates (aka Knuth) Shuffle
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+      }
+
+      function setClock() {
+        // 1. Shuffle numbers and update their display & positions map
+        const numbersToAssign = Array.from({ length: 60 }, (_, i) => i + 1); // [1, 2, ..., 60]
+        shuffleArray(numbersToAssign);
+
+        numberElements.forEach((element, index) => {
+          const assignedNumber = numbersToAssign[index];
+          element.querySelector("span").textContent = assignedNumber;
+          const rotationAngle = (index + 1) * 6; // Original position angle
+          numberPositions[assignedNumber] = rotationAngle;
+        });
+
+        // 2. Get current time and determine target numbers
+        const currentDate = new Date();
+        const s = currentDate.getSeconds(); // 0-59
+        const m = currentDate.getMinutes(); // 0-59
+        const h = currentDate.getHours(); // 0-23
+
+        const targetSecond = s === 0 ? 60 : s; // Map 0 seconds to number 60
+        const targetMinute = m === 0 ? 60 : m; // Map 0 minutes to number 60
+        // Map 1-12 hour to numbers 5, 10, ..., 60
+        const currentHour12 = h % 12 === 0 ? 12 : h % 12;
+        const targetHour = currentHour12 * 5;
+
+        // 3. Find the angles for the target numbers
+        const secondAngle = numberPositions[targetSecond];
+        const minuteAngle = numberPositions[targetMinute];
+        const hourAngle = numberPositions[targetHour];
+
+        // 4. Update hand rotations (convert degrees to ratio for setRotation)
+        setRotation(secondHand, secondAngle / 360);
+        setRotation(minuteHand, minuteAngle / 360);
+        setRotation(hourHand, hourAngle / 360);
+      }
+
+      function setRotation(element, rotationRatio) {
+        element.style.setProperty("--rotation", rotationRatio * 360);
+      }
+
+      // Initial setup: Create number elements and store them
+      for (let i = 1; i <= 60; i++) {
+        const numberDiv = document.createElement("div");
+        numberDiv.classList.add("number");
+        const rotationAngle = i * 6; // 360 / 60 = 6 degrees per number
+        numberDiv.style.setProperty("--rotation", `${rotationAngle}deg`);
+        const numberSpan = document.createElement("span");
+        numberSpan.textContent = i; // Initial
+        numberDiv.appendChild(numberSpan);
+        clock.appendChild(numberDiv);
+        numberElements.push(numberDiv); // Store reference to number element
+      }
+
+      setClock(); // Initial set
+      setInterval(setClock, 1000); // Update every second
+    </script>
+  </body>
+</html>
