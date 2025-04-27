@@ -1,93 +1,427 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="pl">
-<head>
-	<meta charset="utf-8" />
-	<title>Najlepsze seriale - subiektywne TOP 5!</title>
-	<meta name="description" content="Serwis prezentuje subiektywne top 5 seriali telewizyjnych. Sprawdź, czy znasz je wszystkie" />
-	<meta name="keywords" content="top 5, serial, seriale, najlepsze, ciekawe, oglądaj, kinomaniak" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	
-	<style>
-	#container
-	{
-		width: 1000px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	#logo
-	{
-		background-color: black;
-		color: white;
-		text-align: center;
-		padding: 15px;
-	}
-	#nav
-	{
-		float: left;
-		background-color: lightgray;
-		width: 120px;
-		min-height: 620px;
-		padding: 10px;
-	}
-	#content
-	{
-		float: left;
-		padding: 20px;
-		width: 640px;
-	}
-	#ad
-	{
-		float: left;
-		width: 160px;
-		min-height: 620px;
-		padding: 10px;
-		background-color: lightgray;
-	}
-	#footer
-	{
-		clear: both;
-		background-color: black;
-		color: white;
-		text-align: center;
-		padding: 20px;
-	}	
-	</style>
+  <head>
+    <meta charset="utf-8" />
+    <title>Najlepsze seriale - subiektywne TOP 5!</title>
+    <meta
+      name="description"
+      content="Serwis prezentuje subiektywne top 5 seriali telewizyjnych. Sprawdź, czy znasz je wszystkie"
+    />
+    <meta
+      name="keywords"
+      content="top 5, serial, seriale, najlepsze, ciekawe, oglądaj, kinomaniak"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-</head>
+    <!-- Add Matter.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 
-<body>
+    <style>
+      body {
+        width: 100dvw;
+        height: 100dvh;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      #container {
+        width: 800px;
+        height: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        padding: 50px;
+        overflow: hidden;
+      }
+      #game-area {
+        width: 700px;
+        height: 600px;
+        margin: 0 auto;
+        position: relative;
+        border: 1px solid #ccc;
+        background-color: white;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      #logo {
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 20px;
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #nav {
+        float: left;
+        background-color: lightgray;
+        width: 100px;
+        min-height: 300px;
+        padding: 10px;
+        position: relative;
+        z-index: 1;
+        margin-right: 10px;
+      }
+      #content {
+        float: left;
+        padding: 15px;
+        width: 350px;
+        height: 300px;
+        position: relative;
+        z-index: 1;
+        background-color: white;
+        overflow: auto;
+        font-size: 14px;
+      }
+      #ad {
+        float: left;
+        width: 120px;
+        min-height: 300px;
+        padding: 10px;
+        background-color: lightgray;
+        position: relative;
+        z-index: 1;
+        margin-left: 10px;
+      }
+      #footer {
+        clear: both;
+        background-color: #ff5722;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        position: relative;
+        z-index: 1;
+        width: 200px;
+        margin: 80px auto 0;
+        border-radius: 10px;
+        cursor: move;
+      }
+      #game-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .broken {
+        visibility: hidden;
+      }
+      #start-game {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 3;
+      }
+    </style>
+  </head>
 
-	<div id="container">
-	
-		<div id="logo">
-			<h1>Najlepsze seriale - subiektywne TOP 5!</h1>
-		</div>
-	
-		<div id="nav">
-			Dr House <br />
-			True Detective <br />
-			Breaking Bad <br />
-			Big Bang Theory <br />
-			Z Archiwum X <br />
-		</div>
-		
-		<div id="content">
-			<h2>Dr House (ang. House; House, M.D.)</h2>
-			
-			amerykański medyczny serial telewizyjny produkowany dla stacji telewizyjnej Fox. Zadebiutował na antenie 16 listopada 2004 roku. Fabuła serialu koncentruje się na osobie dr. Gregory'ego House'a (Hugh Laurie), niekonwencjonalnego, szalonego, a zarazem genialnego lekarza, kierującego zespołem diagnostycznym w fikcyjnym Szpitalu Klinicznym Princeton-Plainsboro (PPTH) w New Jersey. W każdym odcinku dr House wraz ze swoim zespołem próbuje zdiagnozować i wyleczyć pacjentów przejawiających rozmaite objawy, niewyjaśnione wcześniej przez innych lekarzy. 
-			<br /><br />			
-			W pierwszych trzech seriach zespół dr. House'a tworzyli: dr Allison Cameron (Jennifer Morrison), dr Robert Chase (Jesse Spencer) i dr Eric Foreman (Omar Epps), od czwartej serii dr Chris Taub (Peter Jacobson), dr Lawrence Kutner (Kal Penn) oraz dr Remy "Trzynastka" Hadley (Olivia Wilde), w siódmym sezonie w zespole pojawiła się Martha Masters (Amber Tamblyn), a w ósmym do zespołu dochodzą dr Chi Park (Charlyne Yi) oraz lekarka z więzienia dr Jessica Adams (Odette Annable). Ponadto serial ukazuje prywatne życie House'a i członków jego zespołu, najlepszego i jedynego przyjaciela dr. Jamesa Wilsona (Robert Sean Leonard), ordynatora oddziału onkologii, oraz dr Lisy Cuddy (Lisa Edelstein), dyrektor szpitala Princeton‑Plainsboro.
-		</div>
-		
-		<div id="ad">
-			<img src="reklama.jpg" />
-		</div>
-		
-		<div id="footer">
-			Najlepsze seriale - TOP 5! &copy; Wszelkie prawa zastrzeżone
-		</div>
-	
-	</div>
+  <body>
+    <div id="container">
+      <div id="game-area">
+        <canvas id="game-canvas"></canvas>
+        <div id="logo">
+          <h1>Najlepsze seriale - TOP 5!</h1>
+        </div>
 
-</body>
+        <div id="nav">
+          Dr House <br />
+          True Detective <br />
+          Breaking Bad <br />
+          Big Bang Theory <br />
+          Z Archiwum X <br />
+        </div>
+
+        <div id="content">
+          <h2>Dr House (ang. House; House, M.D.)</h2>
+
+          amerykański medyczny serial telewizyjny produkowany dla stacji
+          telewizyjnej Fox. Zadebiutował na antenie 16 listopada 2004 roku.
+          Fabuła serialu koncentruje się na osobie dr. Gregory'ego House'a (Hugh
+          Laurie), niekonwencjonalnego, szalonego, a zarazem genialnego lekarza,
+          kierującego zespołem diagnostycznym w fikcyjnym Szpitalu Klinicznym
+          Princeton-Plainsboro (PPTH) w New Jersey.
+          <br /><br />
+          W pierwszych trzech seriach zespół dr. House'a tworzyli: dr Allison
+          Cameron (Jennifer Morrison), dr Robert Chase (Jesse Spencer) i dr Eric
+          Foreman (Omar Epps), od czwartej serii dr Chris Taub (Peter Jacobson).
+        </div>
+
+        <div id="ad">
+          <img src="reklama.jpg" width="100" />
+        </div>
+
+        <div id="footer">Steruj, aby odbić piłkę!</div>
+      </div>
+    </div>
+
+    <button id="start-game">Start Breakout</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Matter.js module aliases
+        const Engine = Matter.Engine,
+          Render = Matter.Render,
+          Runner = Matter.Runner,
+          Bodies = Matter.Bodies,
+          Composite = Matter.Composite,
+          Body = Matter.Body,
+          Events = Matter.Events;
+
+        const gameArea = document.getElementById("game-area");
+        const canvas = document.getElementById("game-canvas");
+        const startButton = document.getElementById("start-game");
+        const footer = document.getElementById("footer");
+
+        // Create engine and renderer
+        const engine = Engine.create();
+        engine.gravity.y = 0; // Remove gravity effect
+
+        const render = Render.create({
+          canvas: canvas,
+          engine: engine,
+          options: {
+            width: gameArea.offsetWidth,
+            height: gameArea.offsetHeight,
+            wireframes: false,
+            background: "transparent",
+          },
+        });
+
+        // Create walls (boundaries)
+        const walls = [
+          // Top wall
+          Bodies.rectangle(
+            gameArea.offsetWidth / 2,
+            -10,
+            gameArea.offsetWidth,
+            20,
+            {
+              isStatic: true,
+              render: { fillStyle: "transparent" },
+              label: "wall",
+            }
+          ),
+          // Left wall
+          Bodies.rectangle(
+            -10,
+            gameArea.offsetHeight / 2,
+            20,
+            gameArea.offsetHeight,
+            {
+              isStatic: true,
+              render: { fillStyle: "transparent" },
+              label: "wall",
+            }
+          ),
+          // Right wall
+          Bodies.rectangle(
+            gameArea.offsetWidth + 10,
+            gameArea.offsetHeight / 2,
+            20,
+            gameArea.offsetHeight,
+            {
+              isStatic: true,
+              render: { fillStyle: "transparent" },
+              label: "wall",
+            }
+          ),
+          // Bottom wall (only for ball reset detection, not visible)
+          Bodies.rectangle(
+            gameArea.offsetWidth / 2,
+            gameArea.offsetHeight + 30,
+            gameArea.offsetWidth,
+            10,
+            {
+              isSensor: true,
+              isStatic: true,
+              render: { visible: false },
+              label: "bottomWall",
+            }
+          ),
+        ];
+
+        // Create the footer paddle
+        const footerRect = footer.getBoundingClientRect();
+        const gameAreaRect = gameArea.getBoundingClientRect();
+
+        const paddle = Bodies.rectangle(
+          footerRect.left - gameAreaRect.left + footerRect.width / 2,
+          footerRect.top - gameAreaRect.top + footerRect.height / 2,
+          footerRect.width,
+          footerRect.height,
+          {
+            isStatic: true,
+            chamfer: { radius: 10 },
+            render: {
+              fillStyle: "transparent",
+              visible: false, // Make it invisible since we'll move the actual footer
+            },
+            label: "paddle",
+          }
+        );
+
+        // Create ball - positioned safely away from other elements
+        const ball = Bodies.circle(
+          gameArea.offsetWidth / 2,
+          gameArea.offsetHeight - 150,
+          10,
+          {
+            restitution: 1,
+            friction: 0,
+            frictionAir: 0,
+            inertia: Infinity,
+            render: { fillStyle: "#FF5722" },
+            label: "ball",
+          }
+        );
+
+        // Map DOM elements to Matter.js bodies
+        const createElementBody = (element, label) => {
+          const rect = element.getBoundingClientRect();
+          const gameAreaRect = gameArea.getBoundingClientRect();
+
+          return Bodies.rectangle(
+            rect.left - gameAreaRect.left + rect.width / 2,
+            rect.top - gameAreaRect.top + rect.height / 2,
+            rect.width,
+            rect.height,
+            {
+              isStatic: true,
+              render: { fillStyle: "transparent" },
+              label: label,
+            }
+          );
+        };
+
+        // Create bodies for each element
+        const logo = createElementBody(document.getElementById("logo"), "logo");
+        const nav = createElementBody(document.getElementById("nav"), "nav");
+        const content = createElementBody(
+          document.getElementById("content"),
+          "content"
+        );
+        const ad = createElementBody(document.getElementById("ad"), "ad");
+
+        // Add all bodies to the world
+        Composite.add(engine.world, [
+          ...walls,
+          paddle,
+          ball,
+          logo,
+          nav,
+          content,
+          ad,
+        ]);
+
+        // Handle collision events
+        Events.on(engine, "collisionStart", function (event) {
+          event.pairs.forEach((pair) => {
+            // Check if the ball collided with a webpage element
+            if (pair.bodyA.label === "ball") {
+              const elementBody = pair.bodyB;
+              if (
+                ["logo", "nav", "content", "ad"].includes(elementBody.label)
+              ) {
+                // "Break" the element by hiding it and removing the body
+                document
+                  .getElementById(elementBody.label)
+                  .classList.add("broken");
+                Composite.remove(engine.world, elementBody);
+              }
+              // Add bounce sound or effect if needed
+            } else if (pair.bodyB.label === "ball") {
+              const elementBody = pair.bodyA;
+              if (
+                ["logo", "nav", "content", "ad"].includes(elementBody.label)
+              ) {
+                document
+                  .getElementById(elementBody.label)
+                  .classList.add("broken");
+                Composite.remove(engine.world, elementBody);
+              }
+              // Add bounce sound or effect if needed
+            }
+
+            // If ball hits bottom wall, reset it
+            if (
+              (pair.bodyA.label === "ball" &&
+                pair.bodyB.label === "bottomWall") ||
+              (pair.bodyB.label === "ball" && pair.bodyA.label === "bottomWall")
+            ) {
+              resetBall();
+            }
+          });
+        });
+
+        // Move paddle (and footer) with mouse
+        document.addEventListener("mousemove", function (event) {
+          const gameAreaRect = gameArea.getBoundingClientRect();
+          const mouseX = event.clientX - gameAreaRect.left;
+          const paddleWidth = footer.offsetWidth;
+
+          // Keep paddle within game area bounds
+          if (
+            mouseX > paddleWidth / 2 &&
+            mouseX < gameAreaRect.width - paddleWidth / 2
+          ) {
+            Body.setPosition(paddle, { x: mouseX, y: paddle.position.y });
+
+            // Move the actual footer element to match paddle position
+            footer.style.marginLeft = mouseX - paddleWidth / 2 + "px";
+          }
+        });
+
+        // Function to reset the ball
+        function resetBall() {
+          Body.setPosition(ball, {
+            x: gameArea.offsetWidth / 2,
+            y: gameArea.offsetHeight - 150,
+          });
+
+          const speed = 5;
+          const angle = -Math.PI / 4 - Math.random() * (Math.PI / 2); // Random upward angle
+
+          Body.setVelocity(ball, {
+            x: speed * Math.cos(angle),
+            y: speed * Math.sin(angle),
+          });
+        }
+
+        // Function to set initial ball velocity
+        function launchBall() {
+          const speed = 5;
+          const angle = -Math.PI / 4 - Math.random() * (Math.PI / 2); // Random upward angle
+
+          Body.setVelocity(ball, {
+            x: speed * Math.cos(angle),
+            y: speed * Math.sin(angle),
+          });
+        }
+
+        // Start game on button click
+        startButton.addEventListener("click", function () {
+          // Run the engine and renderer
+          Runner.run(engine);
+          Render.run(render);
+
+          // Launch the ball after a short delay to ensure everything is ready
+          setTimeout(launchBall, 500);
+
+          // Hide start button
+          this.style.display = "none";
+        });
+      });
+    </script>
+  </body>
 </html>
